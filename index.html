@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tobias Zarlenga — Full-Stack Developer</title>
+<style>
+  :root{
+    --bg:#0a0a0f;
+    --bg-soft:#13131c;
+    --card:#16161f;
+    --border:#26263400;
+    --text:#e8e8ee;
+    --muted:#9494a8;
+    --accent:#6c5ce7;
+    --accent2:#00d2d3;
+    --grad:linear-gradient(120deg,#6c5ce7 0%,#00d2d3 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  /* ambient glow */
+  body::before{
+    content:"";
+    position:fixed;
+    top:-30%;left:50%;
+    transform:translateX(-50%);
+    width:900px;height:900px;
+    background:radial-gradient(circle,rgba(108,92,231,.18),transparent 60%);
+    pointer-events:none;z-index:0;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    backdrop-filter:blur(12px);
+    background:rgba(10,10,15,.6);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;font-size:18px;letter-spacing:-.5px}
+  .logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-cta{
+    background:var(--grad);color:#fff!important;padding:9px 18px;border-radius:10px;
+    font-weight:600;transition:transform .2s,box-shadow .2s;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,92,231,.4)}
+  .burger{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer}
+
+  /* HERO */
+  header{padding:160px 0 100px;text-align:center}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(108,92,231,.12);border:1px solid rgba(108,92,231,.3);
+    color:#b8aaff;padding:6px 14px;border-radius:99px;font-size:13px;font-weight:500;
+    margin-bottom:28px;
+  }
+  .dot{width:8px;height:8px;border-radius:50%;background:#00d2d3;box-shadow:0 0 8px #00d2d3;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  header h1{
+    font-size:clamp(40px,7vw,72px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:24px;
+  }
+  header h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  header p{font-size:clamp(17px,2.5vw,21px);color:var(--muted);max-width:620px;margin:0 auto 40px}
+  .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn{
+    padding:14px 28px;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;
+    transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;
+  }
+  .btn-primary{background:var(--grad);color:#fff}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(108,92,231,.45)}
+  .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid rgba(255,255,255,.12)}
+  .btn-ghost:hover{background:rgba(255,255,255,.1);transform:translateY(-3px)}
+
+  /* SECTIONS */
+  section{padding:90px 0}
+  .sec-label{color:var(--accent2);font-weight:600;font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+  .sec-title{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-1px;margin-bottom:18px}
+  .sec-intro{color:var(--muted);max-width:640px;font-size:17px}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:50px;align-items:center;margin-top:40px}
+  .about-grid p{color:var(--muted);font-size:17px;margin-bottom:18px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .stat{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px}
+  .stat .num{font-size:32px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .stat .lbl{color:var(--muted);font-size:14px;margin-top:4px}
+
+  /* STACK */
+  .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+  .chip{
+    background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;
+    padding:12px 20px;font-size:15px;font-weight:500;transition:transform .2s,border-color .2s;
+  }
+  .chip:hover{transform:translateY(-3px);border-color:var(--accent)}
+
+  /* PROJECTS */
+  .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:40px}
+  .card{
+    background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:18px;
+    padding:28px;transition:transform .25s,border-color .25s,box-shadow .25s;position:relative;overflow:hidden;
+  }
+  .card::after{content:"";position:absolute;inset:0;background:var(--grad);opacity:0;transition:opacity .25s;z-index:-1}
+  .card:hover{transform:translateY(-6px);border-color:rgba(108,92,231,.4);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+  .card .ico{width:48px;height:48px;border-radius:12px;background:rgba(108,92,231,.15);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px}
+  .card h3{font-size:20px;font-weight:700;margin-bottom:10px}
+  .card p{color:var(--muted);font-size:15px;margin-bottom:18px}
+  .card .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .card .tag{font-size:12px;color:#b8aaff;background:rgba(108,92,231,.12);padding:4px 10px;border-radius:6px}
+  .card a{color:var(--accent2);text-decoration:none;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+  .card a:hover{gap:10px;transition:gap .2s}
+
+  /* CONTACT */
+  .contact{text-align:center;background:var(--bg-soft);border-radius:28px;padding:70px 30px;margin-bottom:40px;border:1px solid rgba(255,255,255,.06)}
+  .contact h2{font-size:clamp(30px,5vw,46px);font-weight:800;letter-spacing:-1px;margin-bottom:18px}
+  .contact p{color:var(--muted);font-size:18px;max-width:500px;margin:0 auto 36px}
+  .contact-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+  /* FOOTER */
+  footer{padding:40px 0;border-top:1px solid rgba(255,255,255,.06);text-align:center;color:var(--muted);font-size:14px}
+  .socials{display:flex;gap:20px;justify-content:center;margin-bottom:20px}
+  .socials a{color:var(--muted);transition:color .2s,transform .2s}
+  .socials a:hover{color:var(--text);transform:translateY(-3px)}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+  .reveal.show{opacity:1;transform:none}
+
+  @media(max-width:760px){
+    .nav-links{display:none}
+    .burger{display:block}
+    .about-grid{grid-template-columns:1fr;gap:30px}
+    header{padding:130px 0 70px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">Tob<span>Dev</span></div>
+    <div class="nav-links">
+      <a href="#about">Sobre mí</a>
+      <a href="#stack">Stack</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#contacto" class="nav-cta">Trabajemos juntos</a>
+    </div>
+    <button class="burger" onclick="document.querySelector('.nav-links').style.display='flex'">☰</button>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="badge"><span class="dot"></span> Disponible para nuevos proyectos</div>
+    <h1>Hola, soy Tobias.<br>Construyo <span class="hl">productos web</span> que funcionan.</h1>
+    <p>Desarrollador full-stack en Tucumán, Argentina. Diseño y programo sitios y aplicaciones web a medida — y dirijo <strong style="color:#b8aaff">Diseñá tu idea</strong>, mi agencia de sitios web.</p>
+    <div class="hero-btns">
+      <a href="#contacto" class="btn btn-primary">Hablemos →</a>
+      <a href="#proyectos" class="btn btn-ghost">Ver proyectos</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="sec-label">Sobre mí</div>
+    <h2 class="sec-title">Desarrollo end-to-end, sin vueltas</h2>
+    <div class="about-grid">
+      <div>
+        <p>Soy desarrollador full-stack especializado en aplicaciones web y sitios a medida. Trabajo de forma freelance y dirijo <strong style="color:var(--text)">Diseñá tu idea</strong>, mi agencia de sitios web, acompañando a clientes desde la idea hasta el producto en producción.</p>
+        <p>Me enfoco en escribir código limpio, diseñar interfaces que se sienten bien de usar y entregar a tiempo. Si necesitás llevar una idea a la web o mejorar algo que ya tenés, puedo ayudarte.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="num">3+</div><div class="lbl">Años desarrollando</div></div>
+        <div class="stat"><div class="num">10+</div><div class="lbl">Proyectos entregados</div></div>
+        <div class="stat"><div class="num">100%</div><div class="lbl">A medida</div></div>
+        <div class="stat"><div class="num">Full</div><div class="lbl">Stack completo</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap reveal">
+    <div class="sec-label">Stack</div>
+    <h2 class="sec-title">Tecnologías que uso</h2>
+    <p class="sec-intro">Elijo las herramientas según el proyecto, pero estas son las que manejo a diario.</p>
+    <div class="chips">
+      <div class="chip">JavaScript</div>
+      <div class="chip">TypeScript</div>
+      <div class="chip">React</div>
+      <div class="chip">Next.js</div>
+      <div class="chip">Node.js</div>
+      <div class="chip">Python</div>
+      <div class="chip">Tailwind CSS</div>
+      <div class="chip">PostgreSQL</div>
+      <div class="chip">WordPress</div>
+      <div class="chip">Elementor</div>
+      <div class="chip">Git</div>
+      <div class="chip">Figma</div>
+    </div>
+  </div>
+</section>
+
+<section id="proyectos">
+  <div class="wrap reveal">
+    <div class="sec-label">Proyectos</div>
+    <h2 class="sec-title">Algunas cosas que construí</h2>
+    <p class="sec-intro">Una selección de trabajos. ¿Querés ver más? Pasate por mi GitHub.</p>
+    <div class="projects">
+
+      <div class="card">
+        <div class="ico">📰</div>
+        <h3>Blod Magazine</h3>
+        <p>Revista digital de lifestyle y wellness: moda, cultura, música, salud y más, con podcast y redes integradas. Diseño editorial y navegación por categorías.</p>
+        <div class="tags"><span class="tag">WordPress</span><span class="tag">Elementor</span><span class="tag">Diseño web</span></div>
+        <a href="https://blodmagazine.com/" target="_blank">Ver sitio →</a>
+      </div>
+
+      <div class="card">
+        <div class="ico">🎯</div>
+        <h3>1000 Toros Rojos</h3>
+        <p>Sitio para un estudio creativo y de branding. "Pensamientos líquidos, ideas sólidas": presentación de casos, recorrido y propuesta de marca.</p>
+        <div class="tags"><span class="tag">WordPress</span><span class="tag">Elementor</span><span class="tag">Branding</span></div>
+        <a href="https://1000torosrojos.com/" target="_blank">Ver sitio →</a>
+      </div>
+
+      <div class="card">
+        <div class="ico">💡</div>
+        <h3>Diseñá tu idea</h3>
+        <p>Mi agencia de diseño y desarrollo de sitios web. Acompaño a marcas y emprendimientos a tener una presencia online profesional y a medida.</p>
+        <div class="tags"><span class="tag">Agencia</span><span class="tag">Diseño</span><span class="tag">Desarrollo</span></div>
+        <a href="https://www.instagram.com/diseniatuidea/" target="_blank">Ver en Instagram →</a>
+      </div>
+
+      <div class="card">
+        <div class="ico">⚾</div>
+        <h3>Scouting de Softbol</h3>
+        <p>Herramienta de scouting de bateadores que procesa datos y genera estadísticas para analizar el rendimiento. Proyecto personal full-stack.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Python</span></div>
+        <a href="https://github.com/tobiaszarlenga" target="_blank">Ver en GitHub →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="contact reveal" id="contacto">
+      <h2>¿Tenés un proyecto en mente?</h2>
+      <p>Contame qué necesitás y vemos cómo lo resolvemos. Respondo rápido.</p>
+      <div class="contact-btns">
+        <a href="https://wa.me/5493816119008?text=Hola%20Tobias,%20vi%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20contactarte." class="btn btn-primary" target="_blank">💬 Escribime por WhatsApp</a>
+        <a href="mailto:dev.tobias.zarlenga@gmail.com" class="btn btn-ghost">✉️ Escribime un mail</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="socials">
+      <a href="https://github.com/tobiaszarlenga" target="_blank">GitHub</a>
+      <a href="https://www.instagram.com/diseniatuidea/" target="_blank">Instagram</a>
+      <a href="https://linkedin.com/in/tu-usuario" target="_blank">LinkedIn</a>
+      <a href="mailto:dev.tobias.zarlenga@gmail.com">Email</a>
+    </div>
+    © 2026 Tobias Zarlenga · Hecho con código y mate 🧉
+  </div>
+</footer>
+
+<script>
+  // reveal on scroll
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
