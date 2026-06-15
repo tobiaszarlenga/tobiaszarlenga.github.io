@@ -365,8 +365,8 @@
     .site-card.featured .browser-wrap{grid-template-columns:1fr;gap:18px}
   }
   @media (max-width:760px){
-    #constellation{display:none}
-    .aurora .blob{filter:blur(70px);opacity:.4}
+    /* La constelación ahora SÍ se ve en mobile: versión liviana y no interactiva (ver JS) */
+    .aurora .blob{filter:blur(70px);opacity:.45}
     .nav-links{
       position:fixed;top:68px;left:0;right:0;flex-direction:column;gap:4px;
       background:rgba(13,13,22,.97);backdrop-filter:blur(16px);
@@ -453,7 +453,7 @@
       </div>
       <div class="stats reveal">
         <div class="gcard stat"><div class="num grad-text" data-count="3" data-suffix="+">0</div><div class="lbl">Años desarrollando</div></div>
-        <div class="gcard stat"><div class="num grad-text" data-count="10" data-suffix="+">0</div><div class="lbl">Proyectos entregados</div></div>
+        <div class="gcard stat"><div class="num grad-text" data-count="13" data-suffix="+">0</div><div class="lbl">Proyectos entregados</div></div>
         <div class="gcard stat"><div class="num grad-text" data-count="100" data-suffix="%">0</div><div class="lbl">A medida</div></div>
         <div class="gcard stat"><div class="num grad-text">Full Stack</div><div class="lbl">completo</div></div>
       </div>
@@ -490,7 +490,7 @@
     <div class="sec-head reveal">
       <div class="eyebrow">Trabajos recientes</div>
       <h2 class="sec-title">Sitios que hice para clientes</h2>
-      <p class="sec-lead">Siete demos reales, publicadas y en vivo. Pasá el mouse por encima para verlas cobrar vida, o tocá "Ver sitio" para abrirlas.</p>
+      <p class="sec-lead">Diez demos reales, publicadas y en vivo. Pasá el mouse por encima para verlas cobrar vida, o tocá "Ver sitio" para abrirlas.</p>
     </div>
 
     <!-- Marquee de clientes (de B) -->
@@ -503,6 +503,9 @@
         <span class="marquee-item"><span class="mq-emo">⚽</span>Torneo JOGO<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">💈</span>CHUK'S Barber<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">👕</span>D12tinto<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">💪</span>Infinity Labs<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">🎨</span>Polimax<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">🩺</span>Férulas Tuc<span class="mq-sep"></span></span>
       </div>
     </div>
 
@@ -525,13 +528,79 @@
             </div>
           </div>
           <div class="site-meta">
-            <span class="featured-flag">★ Lo más reciente</span>
+            <span class="featured-flag">★ Destacado</span>
             <div class="site-top"><span class="site-emoji">⚽</span><span class="site-name">Torneo JOGO</span></div>
             <div class="site-loc">Yerba Buena, Tucuman</div>
             <p class="site-desc">Torneos de futbol 5 amateur. Calendario, formato de copas, precios e inscripcion por WhatsApp. Estetica nocturna deportiva.</p>
             <div class="tags"><span class="tag">Sitio web</span><span class="tag">Deportes</span><span class="tag">Eventos</span></div>
             <a class="featured-cta" href="https://torneo-jogo.pages.dev" target="_blank" rel="noopener">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
           </div>
+        </div>
+      </article>
+
+      <article class="gcard site-card reveal" data-tilt>
+        <div class="browser">
+          <div class="live-badge"><span class="ld"></span>En vivo</div>
+          <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
+            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>infinity-labs-d8r.pages.dev</span>
+          </div>
+          <div class="frame-stage">
+            <div class="frame-fallback"><span class="emo">💪</span><span>Infinity Labs — abrir sitio</span></div>
+            <iframe loading="lazy" src="https://infinity-labs-d8r.pages.dev" title="Vista en vivo de Infinity Labs" tabindex="-1" scrolling="no"></iframe>
+            <a class="frame-overlay" href="https://infinity-labs-d8r.pages.dev" target="_blank" rel="noopener" aria-label="Ver sitio Infinity Labs en pestaña nueva">
+              <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            </a>
+          </div>
+        </div>
+        <div class="site-meta">
+          <div class="site-top"><span class="site-emoji">💪</span><span class="site-name">Infinity Labs</span></div>
+          <div class="site-loc">Yerba Buena, Tucumán</div>
+          <p class="site-desc">Laboratorio de suplementos dietarios, primera PYME tucumana certificada por ANMAT. Creatina, Whey Protein, colágeno y más, con envíos a todo el país. Estética farma-tech neón.</p>
+          <div class="tags"><span class="tag">Sitio web</span><span class="tag">Suplementos</span><span class="tag">Salud</span></div>
+        </div>
+      </article>
+
+      <article class="gcard site-card reveal" data-tilt>
+        <div class="browser">
+          <div class="live-badge"><span class="ld"></span>En vivo</div>
+          <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
+            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>polimax-insumos.pages.dev</span>
+          </div>
+          <div class="frame-stage">
+            <div class="frame-fallback"><span class="emo">🎨</span><span>Polimax — abrir sitio</span></div>
+            <iframe loading="lazy" src="https://polimax-insumos.pages.dev" title="Vista en vivo de Polimax" tabindex="-1" scrolling="no"></iframe>
+            <a class="frame-overlay" href="https://polimax-insumos.pages.dev" target="_blank" rel="noopener" aria-label="Ver sitio Polimax en pestaña nueva">
+              <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            </a>
+          </div>
+        </div>
+        <div class="site-meta">
+          <div class="site-top"><span class="site-emoji">🎨</span><span class="site-name">Polimax</span></div>
+          <div class="site-loc">San Miguel de Tucumán</div>
+          <p class="site-desc">Insumos para sublimación y estampado: papeles, tintas, tazas, prendas, gorras y máquinas. Dos sucursales y envíos a todo el país.</p>
+          <div class="tags"><span class="tag">Sitio web</span><span class="tag">Insumos</span><span class="tag">Catálogo</span></div>
+        </div>
+      </article>
+
+      <article class="gcard site-card reveal" data-tilt>
+        <div class="browser">
+          <div class="live-badge"><span class="ld"></span>En vivo</div>
+          <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
+            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>ferulas-tuc.pages.dev</span>
+          </div>
+          <div class="frame-stage">
+            <div class="frame-fallback"><span class="emo">🩺</span><span>Férulas Tuc — abrir sitio</span></div>
+            <iframe loading="lazy" src="https://ferulas-tuc.pages.dev" title="Vista en vivo de Férulas Tuc" tabindex="-1" scrolling="no"></iframe>
+            <a class="frame-overlay" href="https://ferulas-tuc.pages.dev" target="_blank" rel="noopener" aria-label="Ver sitio Férulas Tuc en pestaña nueva">
+              <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            </a>
+          </div>
+        </div>
+        <div class="site-meta">
+          <div class="site-top"><span class="site-emoji">🩺</span><span class="site-name">Férulas Tuc</span></div>
+          <div class="site-loc">San Miguel de Tucumán</div>
+          <p class="site-desc">Fabricantes de férulas e inmovilizadores ortopédicos a medida (marcas MOVI-TRANS® y CONFE). Talles a medida, impresión 3D y envíos. Estética clínica profesional.</p>
+          <div class="tags"><span class="tag">Sitio web</span><span class="tag">Salud</span><span class="tag">Ortopedia</span></div>
         </div>
       </article>
 
@@ -946,14 +1015,16 @@
     if(mq){ mq.innerHTML += mq.innerHTML; }
   }
 
-  /* ===== Constellation canvas (desktop, pausa en visibilitychange, cap dpr+particulas) ===== */
-  if(!reduce && !isMobile){
+  /* ===== Constellation canvas (desktop + mobile liviano, pausa en visibilitychange, cap dpr+particulas) =====
+     En mobile corre igual pero con menos partículas y menor dpr, y queda NO interactiva
+     (en pantallas táctiles no hay cursor, así que el efecto de repulsión nunca se dispara). */
+  if(!reduce){
     var canvas = document.getElementById('constellation');
     var ctx = canvas.getContext('2d');
     var W, H, dpr, particles = [], raf;
     var mouse = {x:-9999, y:-9999};
     function size(){
-      dpr = Math.min(window.devicePixelRatio||1, 2);
+      dpr = Math.min(window.devicePixelRatio||1, isMobile ? 1.5 : 2);
       W = window.innerWidth; H = window.innerHeight;
       canvas.width = W*dpr; canvas.height = H*dpr;
       canvas.style.width = W+'px'; canvas.style.height = H+'px';
@@ -961,7 +1032,7 @@
     }
     function init(){
       size();
-      var count = Math.min(Math.floor(W*H/16000), 90);
+      var count = Math.min(Math.floor(W*H/(isMobile?13000:16000)), isMobile?40:90);
       particles = [];
       for(var k=0;k<count;k++){
         particles.push({
