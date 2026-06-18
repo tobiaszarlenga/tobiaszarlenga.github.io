@@ -1,0 +1,43 @@
+/* ============================================================
+   TobDev — Design Tokens
+   Fuente de verdad de colores y tipografía de la marca.
+   Generado a partir de BRAND.md. Si cambiás un valor acá,
+   volvé a correr /design-sync para actualizar Claude Design.
+   ============================================================ */
+
+:root {
+  /* ---- Colores de marca (de BRAND.md) ---- */
+  --tobdev-navy:     #122A4D; /* Identidad REAL del logo (fondo claro) */
+  --tobdev-mono:     #06172F; /* 1 tinta / grabado / sellos */
+  --tobdev-violet:   #5B6FE4; /* Inicio del degradé */
+  --tobdev-cyan:     #11BFD6; /* Fin del degradé */
+  --tobdev-white:    #FFFFFF; /* Logo sobre fondo oscuro */
+  --tobdev-bg-dark:  #0A0E1A; /* Fondo del sitio / avatares */
+
+  /* ---- Degradé firma (igual que el hero del sitio) ---- */
+  --tobdev-gradient: linear-gradient(135deg, #5B6FE4 0%, #11BFD6 100%);
+
+  /* ---- Roles semánticos (usar estos en los diseños) ---- */
+  --color-background:  var(--tobdev-bg-dark);
+  --color-surface:     var(--tobdev-navy);
+  --color-text:        var(--tobdev-white);
+  --color-accent:      var(--tobdev-cyan);
+  --color-accent-alt:  var(--tobdev-violet);
+  --color-ink:         var(--tobdev-mono);
+
+  /* ---- Tipografía ---- */
+  /* Wordmark en FreeSans Bold (clon de Helvetica) */
+  --font-wordmark: "Helvetica Neue", Helvetica, "FreeSans", Arial, sans-serif;
+  --font-weight-bold: 700;
+}
+
+/* ------------------------------------------------------------
+   Logos disponibles en esta carpeta (assets de marca):
+   - Fondo oscuro:  mark-white.svg / mark-gradient.svg / lockup-horizontal-dark.svg
+   - Fondo claro:   mark-navy.svg  / lockup-horizontal-light.svg
+   - 1 tinta:       mark-mono.svg
+   - Avatar redes:  avatar-gradient.svg
+   - Favicon:       favicon.svg
+   Regla: el navy es la identidad real; el degradé es un tratamiento,
+   no usarlo como única versión ni a tamaños <= 32px.
+   ------------------------------------------------------------ */

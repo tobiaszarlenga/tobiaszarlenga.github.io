@@ -1,0 +1,6 @@
+# Build de subida a Claude Design (artefacto generado por /design-sync)
+ds-bundle/
+
+# Sistema
+Thumbs.db
+.DS_Store
