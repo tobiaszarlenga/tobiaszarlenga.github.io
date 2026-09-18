@@ -256,7 +256,7 @@
   .dots i:nth-child(1){background:#ff5f57}.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
   .url-pill{flex:1;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;
     padding:6px 12px;font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:7px;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:86px} /* deja lugar al badge EN VIVO */
   .url-pill svg{flex:none;opacity:.7}
   /* badge EN VIVO sobre el preview (de A) */
   .live-badge{
@@ -315,6 +315,79 @@
   }
   .featured-cta:hover{transform:translateY(-3px);box-shadow:0 18px 40px -10px rgba(108,92,231,.75)}
 
+  /* ===== Escena 3D destacada (Liga Infantil YB) =====
+     El sitio no permite iframe (X-Frame-Options), asi que va con capturas reales en capas con
+     profundidad: tabla de posiciones atras, browser con la home al medio, telefono y chips adelante.
+     Desktop: parallax con el mouse (JS). Touch: flotacion automatica (CSS, @media hover:none). */
+  .site-card.featured .browser-wrap{grid-template-columns:1.3fr .7fr;gap:30px}
+  .scene{position:relative;width:100%;aspect-ratio:16/11;perspective:1400px;perspective-origin:50% 40%}
+  .scene::before{
+    content:"";position:absolute;inset:8% -2% 4% -2%;border-radius:40%;z-index:0;pointer-events:none;
+    background:radial-gradient(60% 55% at 45% 45%,rgba(108,92,231,.38),transparent 70%),
+               radial-gradient(45% 45% at 82% 72%,rgba(0,210,211,.24),transparent 70%);
+    filter:blur(28px);
+  }
+  .scene-inner{
+    position:absolute;inset:0;transform-style:preserve-3d;
+    transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));will-change:transform;
+  }
+  .scene .layer{position:absolute;transform-style:preserve-3d;backface-visibility:hidden}
+  .scene .layer img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  /* capa de fondo: tabla de posiciones, mas lejos */
+  .layer-back{
+    top:2%;left:-1%;width:56%;aspect-ratio:16/10;border-radius:10px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 50px -20px rgba(0,0,0,.85);
+    transform:translateZ(-90px) rotateY(10deg) rotateZ(-4deg);opacity:.94;
+  }
+  /* capa principal: browser con la home */
+  .layer-main{top:9%;left:4%;width:86%;transform:translateZ(0)}
+  .layer-main .browser{box-shadow:0 30px 70px -26px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.04)}
+  .layer-main .shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0b1a33}
+  .layer-main .shot img{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+  .site-card.featured:hover .layer-main .shot img{transform:scale(1.04)}
+  /* brillo que acompania al mouse */
+  .glare{
+    position:absolute;inset:0;z-index:2;pointer-events:none;mix-blend-mode:screen;opacity:0;
+    background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.17) 47%,rgba(255,255,255,.05) 52%,transparent 60%);
+    transform:translateX(var(--gx,0%));transition:opacity .4s;
+  }
+  .site-card.featured:hover .glare{opacity:1}
+  /* capa frente: telefono */
+  .layer-phone{
+    right:4%;bottom:2%;width:25%;transform:translateZ(70px) rotateY(-8deg) rotateZ(3deg);
+    filter:drop-shadow(0 30px 40px rgba(0,0,0,.7));animation:phoneFloat 7s ease-in-out infinite;
+  }
+  .phone{
+    position:relative;aspect-ratio:390/844;border-radius:12% / 5.5%;overflow:hidden;
+    background:#05070d;border:2px solid #2a2a38;box-shadow:inset 0 0 0 3px #0c0c14,0 0 0 1px rgba(255,255,255,.08);
+  }
+  .phone::before{
+    content:"";position:absolute;top:2.4%;left:50%;width:34%;height:3.2%;transform:translateX(-50%);
+    background:#05070d;border-radius:999px;z-index:2;
+  }
+  .phone img{border-radius:inherit}
+  /* chips flotantes con profundidad propia */
+  .layer-chip{
+    display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
+    padding:8px 13px;border-radius:12px;font-size:.78rem;font-weight:700;color:#fff;
+    background:rgba(16,16,28,.74);border:1px solid rgba(255,255,255,.16);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 14px 30px -14px rgba(0,0,0,.9);
+  }
+  .layer-chip .ci{width:8px;height:8px;border-radius:50%;background:var(--grad);flex:none}
+  .chip-a{left:5%;bottom:14%;transform:translateZ(100px);animation:chipFloat 6s ease-in-out infinite}
+  .chip-b{right:22%;top:2%;transform:translateZ(70px);animation:chipFloat 7s ease-in-out infinite reverse}
+  @keyframes chipFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}
+  @keyframes phoneFloat{0%,100%{translate:0 0}50%{translate:0 -10px}}
+  @keyframes sceneFloat{from{transform:rotateX(4deg) rotateY(-7deg)}to{transform:rotateX(-3deg) rotateY(7deg)}}
+  @media (hover:none){
+    .scene-inner{animation:sceneFloat 9s ease-in-out infinite alternate}
+    .glare{display:none}
+  }
+
+  /* ===== Entrada 3D de las cards (desktop y mobile): llegan inclinadas y se enderezan ===== */
+  .site-card.reveal{transform:perspective(1200px) rotateX(9deg) translateY(44px) scale(.97);transform-origin:50% 100%}
+  .site-card.reveal.in{transform:none}
+
   /* ===== Personal projects ===== */
   .sub-head{margin:78px 0 34px;display:flex;align-items:center;gap:16px}
   .sub-head h3{font-size:1.5rem;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
@@ -363,6 +436,11 @@
   @media (max-width:900px){
     .about-grid{grid-template-columns:1fr;gap:36px}
     .site-card.featured .browser-wrap{grid-template-columns:1fr;gap:18px}
+    .scene{aspect-ratio:4/3}
+    .layer-main{top:7%}
+    .layer-phone{width:29%;right:3%}
+    .layer-back{width:60%}
+    .layer-chip{font-size:.72rem;padding:7px 11px}
   }
   @media (max-width:760px){
     /* La constelación ahora SÍ se ve en mobile: versión liviana y no interactiva (ver JS) */
@@ -383,6 +461,14 @@
     .contact-card{padding:46px 24px}
     .stat .num{font-size:2.1rem}
     .marquee-item{font-size:1.02rem;padding:0 20px}
+    /* escena 3D en pantallas chicas: un solo chip, browser bar y badge proporcionales */
+    .chip-b{display:none}
+    .chip-a{left:4%;bottom:9%;font-size:.66rem;padding:5px 9px}
+    .layer-phone{width:27%;right:3%}
+    .scene .browser-bar{padding:7px 9px}
+    .scene .url-pill{font-size:.62rem;padding:4px 8px;margin-right:62px}
+    .scene .live-badge{font-size:.56rem;padding:3px 7px;top:8px;right:8px;gap:5px}
+    .scene .live-badge .ld{width:6px;height:6px}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation-duration:.001ms !important;animation-iteration-count:1 !important;
@@ -396,6 +482,9 @@
     .pulse-dot::after,.live-badge .ld::after{display:none}
     .marquee-track{animation:none;transform:none}
     .site-card:hover .frame-stage iframe{transform:scale(.5)}
+    .scene-inner,.layer-phone,.layer-chip{animation:none !important}
+    .glare{display:none}
+    .site-card.reveal{transform:none}
   }
 </style>
 </head>
@@ -490,48 +579,88 @@
     <div class="sec-head reveal">
       <div class="eyebrow">Trabajos recientes</div>
       <h2 class="sec-title">Sitios que hice para clientes</h2>
-      <p class="sec-lead">Diez demos reales, publicadas y en vivo. Pasá el mouse por encima para verlas cobrar vida, o tocá "Ver sitio" para abrirlas.</p>
+      <p class="sec-lead">Diez proyectos reales, publicados y en vivo. Pasá el mouse por encima para verlos cobrar vida, o tocá "Ver sitio" para abrirlos.</p>
     </div>
 
     <!-- Marquee de clientes (de B) -->
     <div class="marquee reveal" aria-hidden="true">
       <div class="marquee-track" id="mqTrack">
-        <span class="marquee-item"><span class="mq-emo">🧢</span>Lacross Ind<span class="mq-sep"></span></span>
-        <span class="marquee-item"><span class="mq-emo">👒</span>Malala<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">🏆</span>Liga Infantil YB<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">⚽</span>Torneo JOGO<span class="mq-sep"></span></span>
-        <span class="marquee-item"><span class="mq-emo">💈</span>CHUK'S Barber<span class="mq-sep"></span></span>
-        <span class="marquee-item"><span class="mq-emo">👕</span>D12tinto<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">💪</span>Infinity Labs<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">🩺</span>Férulas Tuc<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">🧢</span>Lacross Ind<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">👒</span>Malala<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">💈</span>CHUK'S Barber<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">👕</span>D12tinto<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">🥐</span>Casa Pan<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">🍔</span>El Gordo Burger<span class="mq-sep"></span></span>
       </div>
     </div>
 
     <div class="clients-grid">
 
-      <!-- Featured / mas reciente: Torneo JOGO (de B) -->
-      <article class="gcard site-card featured reveal" data-tilt>
+      <!-- Featured / mas reciente: Liga Infantil YB. Es una plataforma completa (Next.js) y no permite
+           iframe (X-Frame-Options: SAMEORIGIN), por eso va con capturas reales en una escena 3D. -->
+      <article class="gcard site-card featured reveal" id="featured">
         <div class="browser-wrap">
-          <div class="browser">
-            <div class="live-badge"><span class="ld"></span>En vivo</div>
-            <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
-              <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>torneo-jogo.pages.dev</span>
-            </div>
-            <div class="frame-stage">
-              <div class="frame-fallback"><span class="emo">⚽</span><span>Torneo JOGO — abrir sitio</span></div>
-              <iframe loading="lazy" src="https://torneo-jogo.pages.dev" title="Vista en vivo de Torneo JOGO" tabindex="-1" scrolling="no"></iframe>
-              <a class="frame-overlay" href="https://torneo-jogo.pages.dev" target="_blank" rel="noopener" aria-label="Ver sitio Torneo JOGO en pestaña nueva">
-                <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-              </a>
+          <div class="scene" role="img" aria-label="Vista previa de Liga Infantil YB en escritorio y celular">
+            <div class="scene-inner">
+              <div class="layer layer-back" aria-hidden="true">
+                <img src="assets/liga-posiciones.webp" alt="" width="1800" height="1125" loading="lazy" decoding="async">
+              </div>
+              <div class="layer layer-main">
+                <div class="browser">
+                  <div class="live-badge"><span class="ld"></span>En vivo</div>
+                  <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
+                    <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>ligainfantilyb.com</span>
+                  </div>
+                  <div class="shot">
+                    <img src="assets/liga-desktop.webp" alt="Home de Liga Infantil YB: torneo Clausura, fixture de la fecha y accesos a clubes y posiciones" width="1800" height="1125" loading="lazy" decoding="async">
+                    <span class="glare" aria-hidden="true"></span>
+                    <a class="frame-overlay" href="https://www.ligainfantilyb.com/" target="_blank" rel="noopener" aria-label="Ver sitio Liga Infantil YB en pestaña nueva">
+                      <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="layer layer-phone" aria-hidden="true">
+                <div class="phone"><img src="assets/liga-mobile.webp" alt="" width="780" height="1688" loading="lazy" decoding="async"></div>
+              </div>
+              <span class="layer layer-chip chip-a" aria-hidden="true"><span class="ci"></span>Fixture por cancha</span>
+              <span class="layer layer-chip chip-b" aria-hidden="true"><span class="ci"></span>Posiciones en vivo</span>
             </div>
           </div>
           <div class="site-meta">
             <span class="featured-flag">★ Destacado</span>
-            <div class="site-top"><span class="site-emoji">⚽</span><span class="site-name">Torneo JOGO</span></div>
-            <div class="site-loc">Yerba Buena, Tucuman</div>
-            <p class="site-desc">Torneos de futbol 5 amateur. Calendario, formato de copas, precios e inscripcion por WhatsApp. Estetica nocturna deportiva.</p>
-            <div class="tags"><span class="tag">Sitio web</span><span class="tag">Deportes</span><span class="tag">Eventos</span></div>
-            <a class="featured-cta" href="https://torneo-jogo.pages.dev" target="_blank" rel="noopener">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+            <div class="site-top"><span class="site-emoji">🏆</span><span class="site-name">Liga Infantil YB</span></div>
+            <div class="site-loc">Yerba Buena, Tucumán</div>
+            <p class="site-desc">Plataforma completa para la Liga Infantil de Fútbol de Yerba Buena: fixture por fecha y cancha, resultados que cargan los veedores, goleadores, tablas de posiciones por categoría y perfiles de clubes. Con login y panel de carga, hecha en Next.js.</p>
+            <div class="tags"><span class="tag">Web app</span><span class="tag">Next.js</span><span class="tag">Deportes</span><span class="tag">Panel de gestión</span></div>
+            <a class="featured-cta" href="https://www.ligainfantilyb.com/" target="_blank" rel="noopener">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
           </div>
+        </div>
+      </article>
+
+      <article class="gcard site-card reveal" data-tilt>
+        <div class="browser">
+          <div class="live-badge"><span class="ld"></span>En vivo</div>
+          <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
+            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>torneo-jogo.pages.dev</span>
+          </div>
+          <div class="frame-stage">
+            <div class="frame-fallback"><span class="emo">⚽</span><span>Torneo JOGO — abrir sitio</span></div>
+            <iframe loading="lazy" src="https://torneo-jogo.pages.dev" title="Vista en vivo de Torneo JOGO" tabindex="-1" scrolling="no"></iframe>
+            <a class="frame-overlay" href="https://torneo-jogo.pages.dev" target="_blank" rel="noopener" aria-label="Ver sitio Torneo JOGO en pestaña nueva">
+              <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            </a>
+          </div>
+        </div>
+        <div class="site-meta">
+          <div class="site-top"><span class="site-emoji">⚽</span><span class="site-name">Torneo JOGO</span></div>
+          <div class="site-loc">Yerba Buena, Tucumán</div>
+          <p class="site-desc">Torneos de fútbol 5 amateur. Calendario, formato de copas, precios e inscripción por WhatsApp. Estética nocturna deportiva.</p>
+          <div class="tags"><span class="tag">Sitio web</span><span class="tag">Deportes</span><span class="tag">Eventos</span></div>
         </div>
       </article>
 
@@ -650,12 +779,12 @@
         <div class="browser">
           <div class="live-badge"><span class="ld"></span>En vivo</div>
           <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
-            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>d12tinto-indumentaria.pages.dev</span>
+            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>d12tinto-indumentaria.tobdev.workers.dev</span>
           </div>
           <div class="frame-stage">
             <div class="frame-fallback"><span class="emo">👕</span><span>D12tinto Indumentaria — abrir sitio</span></div>
-            <iframe loading="lazy" src="https://d12tinto-indumentaria.pages.dev" title="Vista en vivo de D12tinto Indumentaria" tabindex="-1" scrolling="no"></iframe>
-            <a class="frame-overlay" href="https://d12tinto-indumentaria.pages.dev" target="_blank" rel="noopener" aria-label="Ver sitio D12tinto Indumentaria en pestaña nueva">
+            <iframe loading="lazy" src="https://d12tinto-indumentaria.tobdev.workers.dev" title="Vista en vivo de D12tinto Indumentaria" tabindex="-1" scrolling="no"></iframe>
+            <a class="frame-overlay" href="https://d12tinto-indumentaria.tobdev.workers.dev" target="_blank" rel="noopener" aria-label="Ver sitio D12tinto Indumentaria en pestaña nueva">
               <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
             </a>
           </div>
@@ -951,6 +1080,50 @@
       });
       btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
     });
+  }
+
+  /* ===== Escena 3D destacada: parallax suave con el mouse (desktop). En touch la mueve CSS. ===== */
+  var scene = document.querySelector('.scene');
+  if(scene && !reduce && !isTouch && canHover){
+    var sceneInner = scene.querySelector('.scene-inner');
+    var glare = scene.querySelector('.glare');
+    var sceneHost = scene.closest('.site-card') || scene;
+    var sTx = 0, sTy = 0, sCx = 0, sCy = 0, sGx = 0, sRun = false;
+    function sceneLoop(){
+      sCx += (sTx - sCx) * .08; sCy += (sTy - sCy) * .08;
+      sceneInner.style.transform = 'rotateX(' + sCy.toFixed(2) + 'deg) rotateY(' + sCx.toFixed(2) + 'deg)';
+      if(glare) glare.style.setProperty('--gx', sGx.toFixed(1) + '%');
+      if(Math.abs(sTx - sCx) > .02 || Math.abs(sTy - sCy) > .02){ requestAnimationFrame(sceneLoop); } else { sRun = false; }
+    }
+    function sceneKick(){ if(!sRun){ sRun = true; requestAnimationFrame(sceneLoop); } }
+    sceneHost.addEventListener('mousemove', function(e){
+      var r = sceneHost.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - .5;
+      var py = (e.clientY - r.top) / r.height - .5;
+      sTx = px * 14; sTy = -py * 10; sGx = px * 60;
+      sceneKick();
+    });
+    sceneHost.addEventListener('mouseleave', function(){ sTx = 0; sTy = 0; sGx = 0; sceneKick(); });
+  }
+
+  /* ===== Tilt 3D por scroll en touch: las cards giran levemente al pasar por el centro de la pantalla ===== */
+  if(!reduce && (isTouch || !canHover)){
+    var tiltFrames = Array.prototype.slice.call(document.querySelectorAll('.site-card:not(.featured) .browser'));
+    var stTick = false;
+    function scrollTilt(){
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      tiltFrames.forEach(function(el){
+        var r = el.getBoundingClientRect();
+        if(r.bottom < 0 || r.top > vh) return;
+        var t = ((r.top + r.height / 2) - vh / 2) / (vh / 2);
+        t = Math.max(-1, Math.min(1, t));
+        el.style.transform = 'perspective(900px) rotateX(' + (t * -7).toFixed(2) + 'deg)';
+      });
+      stTick = false;
+    }
+    window.addEventListener('scroll', function(){ if(!stTick){ stTick = true; requestAnimationFrame(scrollTilt); } }, {passive:true});
+    window.addEventListener('load', scrollTilt);
+    scrollTilt();
   }
 
   /* ===== Iframe fallback robusto (de C): visible hasta load, fade; timeout 6s ===== */
