@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tobias Zarlenga — Desarrollador Full-Stack | TobDev</title>
-<meta name="description" content="Tobias Zarlenga (TobDev), desarrollador full-stack en Tucuman, Argentina. Diseno y programo sitios y aplicaciones web a medida.">
+<meta name="description" content="Tobías Zarlenga (TobDev), desarrollador full-stack en Tucumán, Argentina. Sitios y aplicaciones web a medida, y reels automáticos con IA para negocios.">
 <meta name="theme-color" content="#0a0a0f">
 <link rel="icon" type="image/svg+xml" href="BRAND/favicon.svg">
 <link rel="apple-touch-icon" href="BRAND/avatar-gradient.svg">
@@ -404,6 +404,90 @@
   .proj-link:hover{gap:13px}
   .proj-link .grad-text{font-weight:700}
 
+  /* ===== Videos con IA (servicio) =====
+     Desktop: telefono con el reel a la izquierda (ocupa 2 filas), titulo arriba y pasos abajo a la derecha.
+     Mobile: titulo, telefono, pasos (grid-template-areas). */
+  .vid-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+    grid-template-areas:"phone head" "phone body";column-gap:64px;align-items:start}
+  .vid-head{grid-area:head;align-self:end}
+  .vid-head .sec-lead{max-width:600px}
+  .vid-body{grid-area:body}
+  .reel-stage{grid-area:phone;align-self:center;position:relative;display:flex;justify-content:center;padding:14px 0}
+  .reel-stage::before{
+    content:"";position:absolute;inset:4% 0;border-radius:50%;z-index:0;pointer-events:none;
+    background:radial-gradient(55% 50% at 50% 40%,rgba(108,92,231,.42),transparent 70%),
+               radial-gradient(40% 40% at 70% 80%,rgba(0,210,211,.25),transparent 70%);
+    filter:blur(30px);
+  }
+  .reel-phone{position:relative;z-index:1;width:min(320px,74vw);padding:10px;border-radius:38px;
+    background:linear-gradient(160deg,#24243a,#0c0c14);border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.95),inset 0 0 0 2px #0a0a12}
+  .reel-screen{position:relative;aspect-ratio:9/16;border-radius:29px;overflow:hidden;background:#0b0b18}
+  .reel-screen video{width:100%;height:100%;object-fit:cover;display:block}
+  .reel-sound{
+    position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:2;
+    display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:30px;white-space:nowrap;
+    font:600 .82rem 'Inter',system-ui,sans-serif;color:#fff;cursor:pointer;
+    background:rgba(10,10,18,.74);border:1px solid rgba(255,255,255,.2);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .25s,border-color .25s;
+  }
+  .reel-sound:hover{background:rgba(108,92,231,.6);border-color:rgba(255,255,255,.35)}
+  .reel-sound:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
+  .reel-sound svg{width:16px;height:16px;flex:none}
+  .reel-sound .ico-on{display:none}
+  .reel-sound.on .ico-on{display:block}
+  .reel-sound.on .ico-off{display:none}
+  .reel-chip{
+    position:absolute;z-index:3;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
+    padding:8px 13px;border-radius:12px;font-size:.78rem;font-weight:700;color:#fff;
+    background:rgba(16,16,28,.82);border:1px solid rgba(255,255,255,.16);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 14px 30px -14px rgba(0,0,0,.9);
+    animation:chipFloat 6s ease-in-out infinite;
+  }
+  .reel-chip .ci{width:8px;height:8px;border-radius:50%;background:var(--grad);flex:none}
+  .rc-a{left:-18%;top:24%}
+  .rc-b{right:-18%;bottom:30%;animation-direction:reverse;animation-duration:7s}
+  .vsteps{list-style:none;margin:8px 0 34px;counter-reset:vs}
+  .vsteps li{position:relative;display:grid;grid-template-columns:40px 1fr;gap:16px;padding:12px 0}
+  .vsteps li::before{
+    counter-increment:vs;content:counter(vs);width:40px;height:40px;border-radius:12px;
+    display:grid;place-items:center;font-weight:800;color:#fff;background:var(--grad);
+    box-shadow:0 8px 20px -8px rgba(108,92,231,.7);
+  }
+  .vsteps li:not(:last-child)::after{
+    content:"";position:absolute;left:19.5px;top:58px;bottom:-6px;width:1px;
+    background:linear-gradient(180deg,rgba(108,92,231,.6),transparent);
+  }
+  .vsteps h4{font-size:1.05rem;font-weight:700;margin:7px 0 4px;letter-spacing:-.2px}
+  .vsteps p{color:var(--muted);font-size:.95rem}
+  .vid-btns{display:flex;gap:14px;flex-wrap:wrap}
+  .vid-btns .btn svg{width:19px;height:19px;flex:none}
+  .adapt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+  .adapt{padding:28px 26px;transition:transform .3s}
+  .adapt:hover{transform:translateY(-5px)}
+  .adapt-ico{
+    width:46px;height:46px;border-radius:13px;display:grid;place-items:center;color:#cfc9ff;
+    background:linear-gradient(120deg,rgba(108,92,231,.24),rgba(0,210,211,.16));border:1px solid rgba(108,92,231,.42);
+  }
+  .adapt-ico svg{width:22px;height:22px}
+  .adapt h4{font-size:1.14rem;font-weight:800;margin:18px 0 8px;letter-spacing:-.3px}
+  .adapt p{color:var(--muted);font-size:.95rem}
+  .adapt.soon{border-radius:20px;background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.2)}
+  .soon-flag{
+    display:inline-block;margin-left:8px;padding:3px 9px;border-radius:20px;vertical-align:3px;
+    font-size:.66rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+    color:var(--accent2);border:1px solid rgba(0,210,211,.45);background:rgba(0,210,211,.08);
+  }
+  .rubros{display:flex;flex-wrap:wrap;gap:12px}
+  .rubro{
+    display:inline-flex;align-items:baseline;gap:8px;padding:11px 18px;border-radius:13px;
+    font-size:.94rem;color:var(--muted);background:rgba(255,255,255,.035);border:1px solid var(--border-strong);
+  }
+  .rubro b{color:var(--text);font-weight:700}
+  .vid-cta{margin-top:56px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .vid-cta h3{font-size:1.35rem;font-weight:800;letter-spacing:-.4px;margin-bottom:4px}
+  .vid-cta p{color:var(--muted)}
+
   /* ===== Contact ===== */
   .contact-card{padding:64px 40px;text-align:center;border-radius:26px}
   .contact-card h2{margin-bottom:16px}
@@ -441,6 +525,7 @@
     .layer-phone{width:29%;right:3%}
     .layer-back{width:60%}
     .layer-chip{font-size:.72rem;padding:7px 11px}
+    .vid-grid{grid-template-columns:1fr;grid-template-areas:"head" "phone" "body";row-gap:36px}
   }
   @media (max-width:760px){
     /* La constelación ahora SÍ se ve en mobile: versión liviana y no interactiva (ver JS) */
@@ -449,7 +534,7 @@
       position:fixed;top:68px;left:0;right:0;flex-direction:column;gap:4px;
       background:rgba(13,13,22,.97);backdrop-filter:blur(16px);
       padding:16px 24px 24px;border-bottom:1px solid var(--border);
-      transform:translateY(-130%);transition:transform .35s ease;
+      transform:translateY(calc(-100% - 90px));transition:transform .35s ease;
     }
     .nav-links.open{transform:none}
     .nav-links a{padding:12px 14px;width:100%}
@@ -469,6 +554,12 @@
     .scene .url-pill{font-size:.62rem;padding:4px 8px;margin-right:62px}
     .scene .live-badge{font-size:.56rem;padding:3px 7px;top:8px;right:8px;gap:5px}
     .scene .live-badge .ld{width:6px;height:6px}
+    /* reel de muestra: chips adentro del borde de la pantalla para no salirse del viewport */
+    .rc-a{left:-6%;top:24%;font-size:.7rem;padding:6px 10px}
+    .rc-b{right:-6%;bottom:28%;font-size:.7rem;padding:6px 10px}
+    .rubro{flex-direction:column;gap:2px;width:100%}
+    .vid-cta{padding:24px 22px}
+    .vid-btns .btn{width:100%;justify-content:center}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation-duration:.001ms !important;animation-iteration-count:1 !important;
@@ -482,7 +573,7 @@
     .pulse-dot::after,.live-badge .ld::after{display:none}
     .marquee-track{animation:none;transform:none}
     .site-card:hover .frame-stage iframe{transform:scale(.5)}
-    .scene-inner,.layer-phone,.layer-chip{animation:none !important}
+    .scene-inner,.layer-phone,.layer-chip,.reel-chip{animation:none !important}
     .glare{display:none}
     .site-card.reveal{transform:none}
   }
@@ -507,6 +598,7 @@
       <a href="#about">Sobre mi</a>
       <a href="#stack">Stack</a>
       <a href="#proyectos">Proyectos</a>
+      <a href="#videos">Videos IA</a>
       <a href="#contacto" class="nav-cta">Hablemos</a>
     </div>
   </div>
@@ -846,6 +938,110 @@
   </div>
 </section>
 
+<!-- Servicio: reels automaticos con IA. El reel de muestra es el del 20/10 de @tobdev.ia
+     (contenido propio, sin datos de clientes), comprimido a 540x960 para la web. -->
+<section id="videos">
+  <div class="wrap">
+    <div class="vid-grid">
+      <div class="vid-head reveal">
+        <div class="eyebrow">Nuevo servicio · Videos con IA</div>
+        <h2 class="sec-title">Reels para tu negocio, <span class="grad-text">sin editar nada</span></h2>
+        <p class="sec-lead">Armé un agente de IA que hace los reels de mi cuenta: busca el tema, escribe el guion, pone voz, subtítulos y escenas animadas, y lo deja programado en Instagram. De lunes a viernes, sin que nadie lo edite. Ese mismo sistema lo adapto a tu marca.</p>
+      </div>
+
+      <div class="reel-stage reveal">
+        <div class="reel-phone">
+          <div class="reel-screen">
+            <video id="reelVideo" muted loop playsinline preload="none" width="540" height="960"
+              poster="assets/reel-agente.webp"
+              aria-label="Reel de ejemplo hecho por el agente: cuenta cómo busca el tema, verifica la fuente, arma el video y lo deja programado">
+              <source src="assets/reel-agente.mp4" type="video/mp4">
+            </video>
+            <button class="reel-sound" id="reelSound" type="button" aria-pressed="false">
+              <svg class="ico-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+              <svg class="ico-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+              <span>Escuchar con sonido</span>
+            </button>
+          </div>
+          <span class="reel-chip rc-a" aria-hidden="true"><span class="ci"></span>Hecho por el agente</span>
+          <span class="reel-chip rc-b" aria-hidden="true"><span class="ci"></span>Programado · 19:00</span>
+        </div>
+      </div>
+
+      <div class="vid-body reveal">
+        <ol class="vsteps">
+          <li><div><h4>Busca el tema</h4><p>Noticias, tips o lo que toque según el calendario. Lee la fuente y descarta lo que no puede confirmar.</p></div></li>
+          <li><div><h4>Escribe el guion</h4><p>Frases cortas, un gancho que frena el scroll en el primer segundo y un cierre que invita a guardar, comentar o compartir.</p></div></li>
+          <li><div><h4>Arma el video</h4><p>Voz, subtítulos palabra por palabra, música y una escena animada distinta en cada frase, entre 18 tipos. Formato vertical 1080×1920.</p></div></li>
+          <li><div><h4>Lo programa en Instagram</h4><p>Queda listo para salir solo a las 19:00, marcado como contenido hecho con IA. Si no te convence, lo frenás antes.</p></div></li>
+        </ol>
+        <div class="vid-btns">
+          <a class="btn btn-primary" data-magnetic href="https://www.instagram.com/tobdev.ia/reels/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/></svg>
+            Ver los reels en @tobdev.ia
+          </a>
+          <a class="btn btn-ghost" data-magnetic href="https://wa.me/5493816119008?text=Hola%20Tobias,%20vi%20lo%20de%20los%20reels%20con%20IA%20en%20tu%20portfolio%20y%20quiero%20uno%20para%20mi%20negocio." target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m0 18.15c-1.53 0-3.03-.41-4.34-1.19l-.31-.18-3.12.82.83-3.04-.2-.32a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.24 8.24m4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29"/></svg>
+            Quiero uno para mi negocio
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-head reveal"><h3>Cómo lo adapto a tu negocio</h3><span class="line"></span></div>
+    <div class="adapt-grid">
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7 6.3 9a7 7 0 1 0 11.4 0Z"/></svg></div>
+        <h4>Tu marca</h4>
+        <p>Tus colores, tu logo y tu tipografía en cada video. El color de acento cambia según la campaña o el producto.</p>
+      </article>
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div>
+        <h4>Tus temas</h4>
+        <p>Promos, productos nuevos, preguntas frecuentes, tips de tu rubro o novedades del local. Sale de tu catálogo, tu web o lo que me pases.</p>
+      </article>
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg></div>
+        <h4>Tu voz</h4>
+        <p>Una voz IA en español rioplatense, o tu propia voz clonada para que el reel suene a vos. Solo con tu autorización por escrito.</p>
+      </article>
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div>
+        <h4>Tu ritmo</h4>
+        <p>Todos los días, tres veces por semana o una. Se publica solo, o queda esperando tu OK antes de salir.</p>
+      </article>
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h4>Sin inventar</h4>
+        <p>Los datos se chequean antes de publicar, no se inventan precios ni promesas, y cada video sale marcado como hecho con IA.</p>
+      </article>
+      <article class="adapt soon reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+        <h4>Tu cara en el video <span class="soon-flag">En prueba</span></h4>
+        <p>Un avatar tuyo que presenta el reel, hecho con tu foto y tu voz, sin grabar nada. Lo estoy probando en mi propia cuenta.</p>
+      </article>
+    </div>
+
+    <div class="sub-head reveal"><h3>Ideas según el rubro</h3><span class="line"></span></div>
+    <div class="rubros reveal">
+      <span class="rubro"><b>Gastronomía</b>el plato o la promo de la semana</span>
+      <span class="rubro"><b>Indumentaria</b>lo que entró nuevo</span>
+      <span class="rubro"><b>Salud y estética</b>turnos, horarios y preguntas frecuentes</span>
+      <span class="rubro"><b>Inmobiliarias</b>propiedades recién publicadas</span>
+      <span class="rubro"><b>Profesionales</b>un consejo concreto por semana</span>
+      <span class="rubro"><b>Clubes y escuelitas</b>resultados y fixture del finde</span>
+    </div>
+
+    <div class="gcard vid-cta reveal">
+      <div>
+        <h3>¿Querés verlo con tu marca?</h3>
+        <p>Contame qué vendés y a quién, y vemos qué reels te sirven.</p>
+      </div>
+      <a class="btn btn-wa" data-magnetic href="https://wa.me/5493816119008?text=Hola%20Tobias,%20vi%20lo%20de%20los%20reels%20con%20IA%20en%20tu%20portfolio%20y%20quiero%20uno%20para%20mi%20negocio." target="_blank" rel="noopener">Escribime por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
 <section id="contacto">
   <div class="wrap">
     <div class="gcard contact-card reveal">
@@ -925,7 +1121,7 @@
   });
 
   /* ===== Scrollspy: link activo del nav (de C) ===== */
-  var sections = ['about','stack','proyectos','contacto'].map(function(id){ return document.getElementById(id); });
+  var sections = ['about','stack','proyectos','videos','contacto'].map(function(id){ return document.getElementById(id); });
   var linkMap = {};
   navLinks.querySelectorAll('a[href^="#"]').forEach(function(a){ linkMap[a.getAttribute('href').slice(1)] = a; });
   if('IntersectionObserver' in window){
@@ -1133,6 +1329,43 @@
     f.addEventListener('load', function(){ loaded = true; if(fb) fb.style.opacity = '0'; });
     setTimeout(function(){ if(!loaded && fb) fb.style.opacity = '1'; }, 6000);
   });
+
+  /* ===== Reel de muestra (seccion Videos IA) =====
+     Se reproduce en silencio solo mientras esta en pantalla (preload none: no carga hasta verse).
+     El boton activa el sonido desde el principio; al salir de pantalla vuelve a silenciarse.
+     Con reduced-motion no arranca solo: el boton lo reproduce con sonido. */
+  var reel = document.getElementById('reelVideo');
+  var reelBtn = document.getElementById('reelSound');
+  if(reel && reelBtn){
+    var reelLbl = reelBtn.querySelector('span');
+    function reelUI(){
+      var on = !reel.muted && !reel.paused;
+      reelBtn.classList.toggle('on', on);
+      reelBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      reelLbl.textContent = on ? 'Silenciar' : 'Escuchar con sonido';
+    }
+    function reelPlay(){ var pr = reel.play(); if(pr && pr.catch){ pr.catch(function(){}); } }
+    reelBtn.addEventListener('click', function(){
+      if(reel.muted || reel.paused){
+        reel.currentTime = 0; reel.muted = false; reelPlay();
+      } else {
+        reel.muted = true;
+      }
+      reelUI();
+    });
+    reel.addEventListener('play', reelUI);
+    reel.addEventListener('pause', reelUI);
+    reel.addEventListener('volumechange', reelUI);
+    if('IntersectionObserver' in window){
+      var reelObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ if(!reduce){ reelPlay(); } }
+          else { reel.muted = true; reel.pause(); }
+        });
+      }, {threshold:.35});
+      reelObs.observe(reel);
+    }
+  }
 
   /* ===== Marquee: duplicar contenido para loop perfecto (de B) ===== */
   if(!reduce){
