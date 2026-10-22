@@ -267,8 +267,8 @@
     background:rgba(8,20,14,.72);border:1px solid rgba(33,208,122,.5);
     backdrop-filter:blur(6px);box-shadow:0 6px 18px -8px rgba(0,0,0,.8);
   }
-  .live-badge .ld{width:8px;height:8px;border-radius:50%;background:#21d07a;position:relative;flex:none}
-  .live-badge .ld::after{content:"";position:absolute;inset:0;border-radius:50%;background:#21d07a;
+  .live-badge .ld,.cert-status .ld{width:8px;height:8px;border-radius:50%;background:#21d07a;position:relative;flex:none}
+  .live-badge .ld::after,.cert-status .ld::after{content:"";position:absolute;inset:0;border-radius:50%;background:#21d07a;
     animation:pulse 1.8s ease-out infinite}
   .frame-stage{position:relative;width:100%;aspect-ratio:16/10.5;overflow:hidden;background:var(--bg-soft)}
   .frame-fallback{
@@ -344,14 +344,14 @@
   .layer-main .browser{box-shadow:0 30px 70px -26px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.04)}
   .layer-main .shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0b1a33}
   .layer-main .shot img{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-  .site-card.featured:hover .layer-main .shot img{transform:scale(1.04)}
+  .site-card.featured:hover .layer-main .shot img,.cert-card:hover .layer-main .shot img{transform:scale(1.04)}
   /* brillo que acompania al mouse */
   .glare{
     position:absolute;inset:0;z-index:2;pointer-events:none;mix-blend-mode:screen;opacity:0;
     background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.17) 47%,rgba(255,255,255,.05) 52%,transparent 60%);
     transform:translateX(var(--gx,0%));transition:opacity .4s;
   }
-  .site-card.featured:hover .glare{opacity:1}
+  .site-card.featured:hover .glare,.cert-card:hover .glare{opacity:1}
   /* capa frente: telefono */
   .layer-phone{
     right:4%;bottom:2%;width:25%;transform:translateZ(70px) rotateY(-8deg) rotateZ(3deg);
@@ -488,6 +488,25 @@
   .vid-cta h3{font-size:1.35rem;font-weight:800;letter-spacing:-.4px;margin-bottom:4px}
   .vid-cta p{color:var(--muted)}
 
+  /* ===== Caso de estudio: Certificador de Obras =====
+     Sistema sin link publico: tres capturas de una obra demo inventada en la misma escena 3D que la Liga.
+     Funcionalidades, stack y cierre reusan .adapt, .chip y .vid-cta. */
+  .cert-card{padding:18px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:30px;align-items:center}
+  .cert-card .url-pill{margin-right:96px}
+  .live-badge.is-demo{color:#fff3d6;background:rgba(26,20,8,.72);border-color:rgba(245,190,60,.55)}
+  .live-badge.is-demo .ld{background:#f5be3c}
+  .live-badge.is-demo .ld::after{display:none}
+  .cert-meta{padding:8px 6px 6px}
+  .cert-status{
+    display:inline-flex;align-items:center;gap:9px;margin-bottom:20px;padding:8px 14px;border-radius:14px;
+    font-size:.84rem;font-weight:700;line-height:1.35;color:#dfffe9;
+    background:rgba(8,20,14,.6);border:1px solid rgba(33,208,122,.45);
+  }
+  .cert-meta h3{font-size:1.08rem;font-weight:800;letter-spacing:-.2px;margin-bottom:6px}
+  .cert-meta p{color:var(--muted);font-size:.98rem;margin-bottom:18px}
+  .cert-note{font-size:.8rem;font-style:italic;opacity:.85}
+  .cert-meta p.cert-note{margin-bottom:0}
+
   /* ===== Contact ===== */
   .contact-card{padding:64px 40px;text-align:center;border-radius:26px}
   .contact-card h2{margin-bottom:16px}
@@ -519,7 +538,7 @@
   /* ===== Responsive ===== */
   @media (max-width:900px){
     .about-grid{grid-template-columns:1fr;gap:36px}
-    .site-card.featured .browser-wrap{grid-template-columns:1fr;gap:18px}
+    .site-card.featured .browser-wrap,.cert-card{grid-template-columns:1fr;gap:18px}
     .scene{aspect-ratio:4/3}
     .layer-main{top:7%}
     .layer-phone{width:29%;right:3%}
@@ -554,6 +573,9 @@
     .scene .url-pill{font-size:.62rem;padding:4px 8px;margin-right:62px}
     .scene .live-badge{font-size:.56rem;padding:3px 7px;top:8px;right:8px;gap:5px}
     .scene .live-badge .ld{width:6px;height:6px}
+    /* el telefono tapa la esquina del browser: el aviso de datos demo queda en la nota de abajo */
+    .cert-card .live-badge{display:none}
+    .cert-card .url-pill{margin-right:0}
     /* reel de muestra: chips adentro del borde de la pantalla para no salirse del viewport */
     .rc-a{left:-6%;top:24%;font-size:.7rem;padding:6px 10px}
     .rc-b{right:-6%;bottom:28%;font-size:.7rem;padding:6px 10px}
@@ -570,7 +592,7 @@
     .type-cursor{display:none}
     .gcard::before{animation:none;opacity:.5}
     .gcard::after{display:none}
-    .pulse-dot::after,.live-badge .ld::after{display:none}
+    .pulse-dot::after,.live-badge .ld::after,.cert-status .ld::after{display:none}
     .marquee-track{animation:none;transform:none}
     .site-card:hover .frame-stage iframe{transform:scale(.5)}
     .scene-inner,.layer-phone,.layer-chip,.reel-chip{animation:none !important}
@@ -678,12 +700,12 @@
     <div class="marquee reveal" aria-hidden="true">
       <div class="marquee-track" id="mqTrack">
         <span class="marquee-item"><span class="mq-emo">🏆</span>Liga Infantil YB<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">🎉</span>Casa Vicente<span class="mq-sep"></span></span>
+        <span class="marquee-item"><span class="mq-emo">🐂</span>1000 Toros Rojos<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">⚽</span>Torneo JOGO<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">💪</span>Infinity Labs<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">🩺</span>Férulas Tuc<span class="mq-sep"></span></span>
-        <span class="marquee-item"><span class="mq-emo">🧢</span>Lacross Ind<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">👒</span>Malala<span class="mq-sep"></span></span>
-        <span class="marquee-item"><span class="mq-emo">💈</span>CHUK'S Barber<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">👕</span>D12tinto<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">🥐</span>Casa Pan<span class="mq-sep"></span></span>
         <span class="marquee-item"><span class="mq-emo">🍔</span>El Gordo Burger<span class="mq-sep"></span></span>
@@ -731,6 +753,50 @@
             <div class="tags"><span class="tag">Web app</span><span class="tag">Next.js</span><span class="tag">Deportes</span><span class="tag">Panel de gestión</span></div>
             <a class="featured-cta" href="https://www.ligainfantilyb.com/" target="_blank" rel="noopener">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
           </div>
+        </div>
+      </article>
+
+      <article class="gcard site-card reveal" data-tilt>
+        <div class="browser">
+          <div class="live-badge"><span class="ld"></span>En vivo</div>
+          <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
+            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>casavicente.tobdev.workers.dev</span>
+          </div>
+          <div class="frame-stage">
+            <div class="frame-fallback"><span class="emo">🎉</span><span>Casa Vicente — abrir sitio</span></div>
+            <iframe loading="lazy" src="https://casavicente.tobdev.workers.dev" title="Vista en vivo de Casa Vicente" tabindex="-1" scrolling="no"></iframe>
+            <a class="frame-overlay" href="https://casavicente.tobdev.workers.dev" target="_blank" rel="noopener" aria-label="Ver sitio Casa Vicente en pestaña nueva">
+              <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            </a>
+          </div>
+        </div>
+        <div class="site-meta">
+          <div class="site-top"><span class="site-emoji">🎉</span><span class="site-name">Casa Vicente</span></div>
+          <div class="site-loc">Tucumán</div>
+          <p class="site-desc">Salón de eventos con gran espacio verde. Sitio con disponibilidad de fechas en vivo, cotizador y galería, más un panel interno multiusuario para reservas, pagos y recibos en PDF por WhatsApp.</p>
+          <div class="tags"><span class="tag">Web app</span><span class="tag">Eventos</span><span class="tag">Reservas</span><span class="tag">Panel de gestión</span></div>
+        </div>
+      </article>
+
+      <article class="gcard site-card reveal" data-tilt>
+        <div class="browser">
+          <div class="live-badge"><span class="ld"></span>En vivo</div>
+          <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
+            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>1000torosrojos-site.vercel.app</span>
+          </div>
+          <div class="frame-stage">
+            <div class="frame-fallback"><span class="emo">🐂</span><span>1000 Toros Rojos — abrir sitio</span></div>
+            <iframe loading="lazy" src="https://1000torosrojos-site.vercel.app" title="Vista en vivo de 1000 Toros Rojos" tabindex="-1" scrolling="no"></iframe>
+            <a class="frame-overlay" href="https://1000torosrojos-site.vercel.app" target="_blank" rel="noopener" aria-label="Ver sitio 1000 Toros Rojos en pestaña nueva">
+              <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            </a>
+          </div>
+        </div>
+        <div class="site-meta">
+          <div class="site-top"><span class="site-emoji">🐂</span><span class="site-name">1000 Toros Rojos</span></div>
+          <div class="site-loc">Buenos Aires</div>
+          <p class="site-desc">Estudio creativo con treinta años de trayectoria. Reconstrucción de su sitio en Next.js: casos con galerías y video, sección Craft y un diseño oscuro 100% responsive.</p>
+          <div class="tags"><span class="tag">Sitio web</span><span class="tag">Next.js</span><span class="tag">Agencia creativa</span></div>
         </div>
       </article>
 
@@ -804,29 +870,6 @@
         <div class="browser">
           <div class="live-badge"><span class="ld"></span>En vivo</div>
           <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
-            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>lacross-ind.pages.dev</span>
-          </div>
-          <div class="frame-stage">
-            <div class="frame-fallback"><span class="emo">🧢</span><span>Lacross Ind — abrir sitio</span></div>
-            <iframe loading="lazy" src="https://lacross-ind.pages.dev" title="Vista en vivo de Lacross Ind" tabindex="-1" scrolling="no"></iframe>
-            <a class="frame-overlay" href="https://lacross-ind.pages.dev" target="_blank" rel="noopener" aria-label="Ver sitio Lacross Ind en pestaña nueva">
-              <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-            </a>
-          </div>
-        </div>
-        <div class="site-meta">
-          <div class="site-top"><span class="site-emoji">🧢</span><span class="site-name">Lacross Ind</span></div>
-          <div class="site-loc">Tafi Viejo, Tucuman</div>
-          <p class="site-desc">Indumentaria masculina urbana y casual. Catalogo, identidad de marca y contacto directo.</p>
-          <div class="tags"><span class="tag">Sitio web</span><span class="tag">Indumentaria</span><span class="tag">Branding</span></div>
-        </div>
-      </article>
-
-
-      <article class="gcard site-card reveal" data-tilt>
-        <div class="browser">
-          <div class="live-badge"><span class="ld"></span>En vivo</div>
-          <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
             <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>malala-sombreros.pages.dev</span>
           </div>
           <div class="frame-stage">
@@ -842,28 +885,6 @@
           <div class="site-loc">Tucuman</div>
           <p class="site-desc">Sombreros y gorras customizados a mano, accesorios handmade y workshops. Estetica calida y artesanal.</p>
           <div class="tags"><span class="tag">Sitio web</span><span class="tag">Handmade</span><span class="tag">Marca</span></div>
-        </div>
-      </article>
-
-      <article class="gcard site-card reveal" data-tilt>
-        <div class="browser">
-          <div class="live-badge"><span class="ld"></span>En vivo</div>
-          <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
-            <span class="url-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>chuks-barberia.pages.dev</span>
-          </div>
-          <div class="frame-stage">
-            <div class="frame-fallback"><span class="emo">💈</span><span>CHUK'S Barber Studio — abrir sitio</span></div>
-            <iframe loading="lazy" src="https://chuks-barberia.pages.dev" title="Vista en vivo de CHUK'S Barber Studio" tabindex="-1" scrolling="no"></iframe>
-            <a class="frame-overlay" href="https://chuks-barberia.pages.dev" target="_blank" rel="noopener" aria-label="Ver sitio CHUK'S Barber Studio en pestaña nueva">
-              <span class="see-btn">Ver sitio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-            </a>
-          </div>
-        </div>
-        <div class="site-meta">
-          <div class="site-top"><span class="site-emoji">💈</span><span class="site-name">CHUK'S Barber Studio</span></div>
-          <div class="site-loc">Paraná, Entre Ríos</div>
-          <p class="site-desc">Barbería masculina: cortes, fade, perfilado de barba y cejas, y servicio a domicilio. Turnos por WhatsApp.</p>
-          <div class="tags"><span class="tag">Sitio web</span><span class="tag">Barbería</span><span class="tag">Turnos</span></div>
         </div>
       </article>
 
@@ -935,6 +956,108 @@
 
     </div>
 
+  </div>
+</section>
+
+<!-- Caso de estudio sin link publico (en validacion con usuarios reales). Las capturas son de una obra
+     demo inventada (24 viviendas, Contratista A-D): nunca datos reales de obras ni de contratistas. -->
+<section id="certificador">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Caso de estudio · Sistema a medida</div>
+      <h2 class="sec-title">Certificador de Obras</h2>
+      <p class="sec-lead">Un sistema web para constructoras de vivienda en serie que reemplaza el Excel con el que se sigue el avance de obra y se liquida a los contratistas. Lo diseñé junto a un constructor con años de oficio, que pasó su método de trabajo en planillas a reglas de negocio concretas.</p>
+    </div>
+
+    <article class="gcard cert-card reveal">
+      <div class="scene" role="img" aria-label="Capturas del Certificador con una obra demo: certificado de un contratista, reporte de avance para el inspector y carga de medición en el celular">
+        <div class="scene-inner">
+          <div class="layer layer-back" aria-hidden="true">
+            <img src="assets/cert-reporte.webp" alt="" width="1800" height="1125" loading="lazy" decoding="async">
+          </div>
+          <div class="layer layer-main">
+            <div class="browser">
+              <div class="live-badge is-demo"><span class="ld"></span>Datos demo</div>
+              <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span>
+                <span class="url-pill">Certificador · Barrio Demo</span>
+              </div>
+              <div class="shot">
+                <img src="assets/cert-certificado.webp" alt="Certificado de un contratista: total bruto, retención del 5 %, neto a pagar y el detalle por lote con el precio congelado al cerrar" width="1800" height="1125" loading="lazy" decoding="async">
+                <span class="glare" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+          <div class="layer layer-phone" aria-hidden="true">
+            <div class="phone"><img src="assets/cert-medir.webp" alt="" width="780" height="1688" loading="lazy" decoding="async"></div>
+          </div>
+          <span class="layer layer-chip chip-a" aria-hidden="true"><span class="ci"></span>Retención del 5 % automática</span>
+          <span class="layer layer-chip chip-b" aria-hidden="true"><span class="ci"></span>Carga por voz, sin señal</span>
+        </div>
+      </div>
+      <div class="cert-meta">
+        <span class="cert-status"><span class="ld"></span>En producción · validando con usuarios reales</span>
+        <h3>El problema</h3>
+        <p>En una obra con muchas casas iguales hay que saber qué porcentaje de cada rubro está terminado en cada lote, quién lo hizo y cuánto corresponde pagarle. En Excel eso termina en errores, datos pisados y cero trazabilidad.</p>
+        <h3>La solución</h3>
+        <p>El sistema sabe qué contratista tiene cada rubro en cada lote, calcula cuánto pagarle y guarda un historial que no se puede modificar. Además importa la obra desde el Excel original, sin retipear, y tiene login propio con roles de administrador y medidor.</p>
+        <p class="cert-note">Capturas con una obra de demostración: lotes, contratistas y montos inventados.</p>
+      </div>
+    </article>
+
+    <div class="sub-head reveal"><h3>Lo que hace</h3><span class="line"></span></div>
+    <div class="adapt-grid">
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></div>
+        <h4>Avance por lote y por rubro</h4>
+        <p>Cada trabajo de cada casa con su porcentaje, validado de 0 a 100. Un avance no puede bajar sin una corrección explícita.</p>
+      </article>
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M6 16V9M11 16V5M16 16v-4"/><path d="M19 8l2-2-2-2"/></svg></div>
+        <h4>Certifica solo la diferencia</h4>
+        <p>En cada corte se paga lo que avanzó desde el anterior: el avance actual menos lo ya certificado. Nada se cobra dos veces.</p>
+      </article>
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <h4>Precios congelados por fecha</h4>
+        <p>Los precios tienen períodos de vigencia. Cada certificado queda al precio de su fecha y el pasado no se sobrescribe nunca.</p>
+      </article>
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 17l6-6"/><circle cx="9.5" cy="11.5" r="1"/><circle cx="14.5" cy="16.5" r="1"/></svg></div>
+        <h4>Retención y certificado en PDF</h4>
+        <p>Retiene el 5 % de cada certificado y lo devuelve al cierre de obra. Un certificado cerrado no se toca más y sale en PDF.</p>
+      </article>
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg></div>
+        <h4>Carga por voz en la obra</h4>
+        <p>El medidor dicta «revoque al 70, pisos al 45» con el micrófono del celular, revisa lo que entendió el sistema y recién ahí guarda.</p>
+      </article>
+      <article class="gcard adapt reveal">
+        <div class="adapt-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 2l20 20"/><path d="M8.5 16.5a5 5 0 0 1 7 0M5 12.9a10 10 0 0 1 5.2-2.8M19 12.9a10 10 0 0 0-2.3-1.6M2 8.8a15 15 0 0 1 4.2-2.6M22 8.8A15 15 0 0 0 10.7 5"/><path d="M12 20h.01"/></svg></div>
+        <h4>Funciona sin señal</h4>
+        <p>Es una PWA: se carga sin conexión en la obra y se sincroniza cuando vuelve la señal, sin duplicar registros.</p>
+      </article>
+    </div>
+
+    <div class="sub-head reveal"><h3>Con qué está hecho</h3><span class="line"></span></div>
+    <div class="chips reveal">
+      <span class="chip"><span class="dot"></span>Next.js</span>
+      <span class="chip"><span class="dot"></span>TypeScript estricto</span>
+      <span class="chip"><span class="dot"></span>PostgreSQL · Supabase</span>
+      <span class="chip"><span class="dot"></span>Auth.js</span>
+      <span class="chip"><span class="dot"></span>PWA offline · IndexedDB</span>
+      <span class="chip"><span class="dot"></span>Sincronización idempotente</span>
+      <span class="chip"><span class="dot"></span>Generación de PDF</span>
+      <span class="chip"><span class="dot"></span>Tests del motor de cálculo</span>
+      <span class="chip"><span class="dot"></span>Vercel · deploy continuo</span>
+    </div>
+
+    <div class="gcard vid-cta reveal">
+      <div>
+        <h3>¿Tu empresa también vive en planillas?</h3>
+        <p>Este proyecto muestra lo que hago: tomo un proceso manual de un rubro que no es el mío, lo modelo con las reglas de quien lo conoce y lo llevo a producción con los datos cuidados y uso sin conexión.</p>
+      </div>
+      <a class="btn btn-wa" data-magnetic href="https://wa.me/5493816119008?text=Hola%20Tobias,%20vi%20el%20Certificador%20de%20Obras%20en%20tu%20portfolio%20y%20quiero%20contarte%20un%20proceso%20que%20hoy%20manejo%20en%20Excel." target="_blank" rel="noopener">Contame tu proceso</a>
+    </div>
   </div>
 </section>
 
@@ -1278,28 +1401,29 @@
     });
   }
 
-  /* ===== Escena 3D destacada: parallax suave con el mouse (desktop). En touch la mueve CSS. ===== */
-  var scene = document.querySelector('.scene');
-  if(scene && !reduce && !isTouch && canHover){
-    var sceneInner = scene.querySelector('.scene-inner');
-    var glare = scene.querySelector('.glare');
-    var sceneHost = scene.closest('.site-card') || scene;
-    var sTx = 0, sTy = 0, sCx = 0, sCy = 0, sGx = 0, sRun = false;
-    function sceneLoop(){
-      sCx += (sTx - sCx) * .08; sCy += (sTy - sCy) * .08;
-      sceneInner.style.transform = 'rotateX(' + sCy.toFixed(2) + 'deg) rotateY(' + sCx.toFixed(2) + 'deg)';
-      if(glare) glare.style.setProperty('--gx', sGx.toFixed(1) + '%');
-      if(Math.abs(sTx - sCx) > .02 || Math.abs(sTy - sCy) > .02){ requestAnimationFrame(sceneLoop); } else { sRun = false; }
-    }
-    function sceneKick(){ if(!sRun){ sRun = true; requestAnimationFrame(sceneLoop); } }
-    sceneHost.addEventListener('mousemove', function(e){
-      var r = sceneHost.getBoundingClientRect();
-      var px = (e.clientX - r.left) / r.width - .5;
-      var py = (e.clientY - r.top) / r.height - .5;
-      sTx = px * 14; sTy = -py * 10; sGx = px * 60;
-      sceneKick();
+  /* ===== Escenas 3D (Liga y Certificador): parallax suave con el mouse (desktop). En touch las mueve CSS. ===== */
+  if(!reduce && !isTouch && canHover){
+    document.querySelectorAll('.scene').forEach(function(scene){
+      var sceneInner = scene.querySelector('.scene-inner');
+      var glare = scene.querySelector('.glare');
+      var sceneHost = scene.closest('.site-card, .cert-card') || scene;
+      var sTx = 0, sTy = 0, sCx = 0, sCy = 0, sGx = 0, sRun = false;
+      function sceneLoop(){
+        sCx += (sTx - sCx) * .08; sCy += (sTy - sCy) * .08;
+        sceneInner.style.transform = 'rotateX(' + sCy.toFixed(2) + 'deg) rotateY(' + sCx.toFixed(2) + 'deg)';
+        if(glare) glare.style.setProperty('--gx', sGx.toFixed(1) + '%');
+        if(Math.abs(sTx - sCx) > .02 || Math.abs(sTy - sCy) > .02){ requestAnimationFrame(sceneLoop); } else { sRun = false; }
+      }
+      function sceneKick(){ if(!sRun){ sRun = true; requestAnimationFrame(sceneLoop); } }
+      sceneHost.addEventListener('mousemove', function(e){
+        var r = sceneHost.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - .5;
+        var py = (e.clientY - r.top) / r.height - .5;
+        sTx = px * 14; sTy = -py * 10; sGx = px * 60;
+        sceneKick();
+      });
+      sceneHost.addEventListener('mouseleave', function(){ sTx = 0; sTy = 0; sGx = 0; sceneKick(); });
     });
-    sceneHost.addEventListener('mouseleave', function(){ sTx = 0; sTy = 0; sGx = 0; sceneKick(); });
   }
 
   /* ===== Tilt 3D por scroll en touch: las cards giran levemente al pasar por el centro de la pantalla ===== */
